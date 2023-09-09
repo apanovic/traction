@@ -17,7 +17,8 @@ The following packages are included:
 
  - Trac-1.5.4 (https://download.edgewall.org/trac/Trac-1.5.4.tar.gz)
  - Account Manager Plugin (https://trac-hacks.org/wiki/AccountManagerPlugin)
-
+ - LDAP Account Manager Plugin (https://trac-hacks.org/wiki/LDAPAcctMngrPlugin)
+ 
 Installation
 ============
 
