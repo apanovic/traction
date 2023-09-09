@@ -21,6 +21,7 @@ The following packages are included:
  - Default CC Plugin (https://trac-hacks.org/wiki/DefaultCcPlugin)
  - Autocomplete Users Plugin (https://trac-hacks.org/wiki/AutocompleteUsersPlugin)
  - Subtickets Plugin (https://trac-hacks.org/wiki/SubticketsPlugin)
+ - Graphviz Plugin (https://trac-hacks.org/wiki/GraphvizPlugin)
 
 
 Installation
