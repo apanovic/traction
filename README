@@ -15,6 +15,7 @@ What's included
 
 The following packages are included:
 
+ - Trac-1.5.4 (https://download.edgewall.org/trac/Trac-1.5.4.tar.gz)
 
 Installation
 ============
@@ -35,13 +36,16 @@ running 'python setup.py install' in each package and can easily be done by
 hand - the purpose of the scrip is mainly to record what needs installed and
 in what order.
 
+Known Issues
+============
+
 
 Developer Notes
 ===============
 
-
 Branches
 --------
+
 
 The repo comprises the following two branches:
 
