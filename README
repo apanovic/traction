@@ -19,6 +19,7 @@ The following packages are included:
  - Account Manager Plugin (https://trac-hacks.org/wiki/AccountManagerPlugin)
  - LDAP Account Manager Plugin (https://trac-hacks.org/wiki/LDAPAcctMngrPlugin)
  - Default CC Plugin (https://trac-hacks.org/wiki/DefaultCcPlugin)
+ - Autocomplete users plugin (https://trac-hacks.org/wiki/AutocompleteUsersPlugin)
  
 Installation
 ============
