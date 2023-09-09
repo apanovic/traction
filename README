@@ -88,3 +88,6 @@ that you need is the one containing 'setup.py', eg for a zip called
 'fooplugin' and remvoe the rest. The 'fooplugin' dir should contain the
 'setup.py' script. And you should add 'fooplugin' to the packages list in the
 install.sh script, paying attention to the installation order.
+
+Once added, merge into main. Update the install script, check that the addded
+package works, implement any needed fixes then update this README.
