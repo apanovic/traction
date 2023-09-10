@@ -60,9 +60,9 @@ class AutocompleteUsers(Component):
             if groups:
                 subjects.extend((group, '', 'group') for group in groups)
 
-        content = to_json(subjects)
-        if isinstance(content, unicode):
-            content = content.encode('utf-8')
+        content = to_json(subjects).encode('utf-8')
+        #if isinstance(content, unicode):
+        #    content = content.encode('utf-8')
         req.send(content, 'application/json')
 
     # ITemplateProvider methods
