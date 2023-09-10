@@ -47,8 +47,19 @@ To test the  installation, use scripts/testrun.sh. The script  creates a basic
 test environment  and serves it using  tracd. Run it from  target installation
 dir specified when running install.sh
 
+
 Known Issues
 ============
+
+1. There seems to be a bug in web_ui.LoginModule in accountmgrplugin, it
+   doesn't seem to correctly disable the default loginmodule, so have to
+   explicitly disable that. The symptom is clicking the 'Login' link results
+   in an error saying 'No registered handlers for url'. Add the following in
+   trac.ini to work around it:
+   
+   [components]
+   trac.web.auth.loginmodule = disabled
+
 
 
 Developer Notes

@@ -20,7 +20,9 @@ set -e
 
 # Add new packages below, minding the order as some packages depend on each
 # other.
-packages="trac"
+packages="trac \
+          accountmanagerplugin \
+          ldapacctmngrplugin"
 
 # Build everything first
 for package in $packages; do
