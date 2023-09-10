@@ -16,6 +16,9 @@ if [ ! -d env/test ]; then
     mkdir -p env
     trac-admin env/test initenv "Test Project" sqlite:db/trac.db
     trac-admin env/test permission add admin TRAC_ADMIN
+else
+    trac-admin env/test upgrade
+    trac-admin env/test wiki upgrade
 fi
 
 tracd --port 8000 \

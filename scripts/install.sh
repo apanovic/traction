@@ -19,13 +19,19 @@ echo "Will $action, install target is $root_dir."
 set -e
 
 # Add new packages below, minding the order as some packages depend on each
-# other.
-packages="trac \
-          accountmanagerplugin \
-          ldapacctmngrplugin"
+# other. What's commented out doesn't currently work
+packages=(
+    trac
+    accountmanagerplugin
+    ldapacctmngrplugin
+    defaultccplugin
+    autocompleteusersplugin
+#    subticketsplugin
+#    graphvizplugin
+)
 
 # Build everything first
-for package in $packages; do
+for package in ${packages[@]}; do
     
     if [ -z "$PYTHONPATH" ] ; then
         # The python site-packages is where everything goes, but the directory
