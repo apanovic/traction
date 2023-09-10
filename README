@@ -36,13 +36,16 @@ are Debian names):
  - python3-docutils
  - python3-ldap
 
-The script/install.sh script builds and installs all the necessary packages, in the
-correct order under the site-packages directory specified as the first
+The scripts/install.sh script builds and installs all the necessary packages,
+in the correct order under the site-packages directory specified as the first
 argument. Note that this may need root permissions. This is really a matter of
 running 'python setup.py install' in each package and can easily be done by
 hand - the purpose of the scrip is mainly to record what needs installed and
 in what order.
 
+To test the  installation, use scripts/testrun.sh. The script  creates a basic
+test environment  and serves it using  tracd. Run it from  target installation
+dir specified when running install.sh
 
 Known Issues
 ============
