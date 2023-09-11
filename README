@@ -20,7 +20,6 @@ The following packages are included:
  - LDAP Account Manager Plugin (https://trac-hacks.org/wiki/LDAPAcctMngrPlugin)
  - Default CC Plugin (https://trac-hacks.org/wiki/DefaultCcPlugin)
  - Autocomplete Users Plugin (https://trac-hacks.org/wiki/AutocompleteUsersPlugin)
- - Subtickets Plugin (https://trac-hacks.org/wiki/SubticketsPlugin)
  - Graphviz Plugin (https://trac-hacks.org/wiki/GraphvizPlugin)
 
 
@@ -35,6 +34,7 @@ are Debian names):
  - python3-jinja2
  - python3-docutils
  - python3-ldap
+ - graphviz and optionally, mscgen (for graphvizplugin)
 
 The scripts/install.sh script builds and installs all the necessary packages,
 in the correct order under the site-packages directory specified as the first

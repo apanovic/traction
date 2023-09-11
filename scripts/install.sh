@@ -27,7 +27,8 @@ packages=(
     defaultccplugin
     autocompleteusersplugin
 #    subticketsplugin
-#    graphvizplugin
+    graphvizplugin
+    
 )
 
 # Build everything first

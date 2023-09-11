@@ -90,7 +90,7 @@ class Graphviz(Component):
     implements(IWikiMacroProvider, IHTMLPreviewRenderer, IRequestHandler)
 
     # Available formats and processors, default first (dot/png)
-    Processors = ['dot', 'neato', 'twopi', 'circo', 'fdp']
+    Processors = ['dot', 'neato', 'twopi', 'circo', 'fdp', 'mscgen']
     Bitmap_Formats = ['png', 'jpg', 'gif']
     Vector_Formats = ['svg', 'svgz']
     Formats = Bitmap_Formats + Vector_Formats
@@ -583,6 +583,8 @@ class Graphviz(Component):
         # Note: subprocess.Popen doesn't support unicode options arguments
         # (http://bugs.python.org/issue1759845) so we have to encode them.
         # Anyway, dot expects utf-8 or the encoding specified with -Gcharset.
+        if args[0].endswith('mscgen'):
+            args = tuple([x for x in args if not x.startswith('-G')])
         encoded_cmd = self._launch_args(args)
         with Popen(encoded_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE, close_fds=close_fds) as p:
