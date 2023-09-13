@@ -108,7 +108,7 @@ class DefaultCCAdmin(Component):
                     # If only one component is selected, we don't receive
                     # an array, but a string preventing us from looping in
                     # that case.
-                    if isinstance(req.args.get('sel'), basestring):
+                    if isinstance(req.args.get('sel'), str):
                         cc = DefaultCC(self.env, req.args.get('sel'))
                         cc.delete()
                     else:
