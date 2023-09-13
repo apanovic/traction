@@ -40,7 +40,10 @@ for package in ${packages[@]}; do
         export PYTHONPATH=`find $root_dir -name site-packages`
     fi
 
+    if [ $action = install ]; then
+        action_args=--root=$root_dir
+    fi
 
-    ( cd $package && $PYTHON setup.py $action --root=$root_dir)
+    ( cd $package && $PYTHON setup.py $action $action_args)
 done
     
