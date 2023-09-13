@@ -4,6 +4,7 @@ import ldap.filter
 from trac.core import *
 from trac.config import *
 from acct_mgr.api import IPasswordStore
+from trac.web.session import DetachedSession
 
 class LDAPStore (Component):
     bind_server = Option('ldap', 'bind_server', 'ldap://localhost:389', doc='LDAP server for authentication. The format is "ldap[s]://host[:port]", e.g., "ldap://localhost:389".')
@@ -24,13 +25,31 @@ class LDAPStore (Component):
         try:
             try:
                 con = self.init_connection()
-                resp = self._ldap_search_user(con, user, ['dn'])
+                resp = self._ldap_search_user(con, user, ['dn', 'mail','displayName'])
 
                 # Added to prevent empty password authentication (some server allows that)
-                if not len(resp) :
-                    return None
+                if not len(resp) or resp[0][0] is None:
+                    self.log.debug('Invalid credentials: user %s not registered', user)
+                    return False
 
+                if 'mail' in resp[0][1]:
+                    mail = resp[0][1]['mail'][0].decode('utf-8')
+                else:
+                    mail = None
+
+                if 'displayName' in resp[0][1]:
+                    displayName = resp[0][1]['displayName'][0].decode('utf-8')
+                else:
+                    displayName = ''
+                    
                 resp = con.simple_bind_s(resp[0][0], password)
+
+                if mail != None:
+                    session = DetachedSession(env=self.env, sid=user)
+                    session['email'] = mail
+                    session['name'] = displayName
+                    session.save()
+                    
                 return True
             except ldap.INVALID_CREDENTIALS:
                 self.log.debug('Invalid credentials: user %s not authenticated', user)
@@ -48,15 +67,18 @@ class LDAPStore (Component):
 
         try:
             con = self.init_connection()
-            resp = con.search_s(base, ldap.SCOPE_SUBTREE, filter, ['dn','uid'])
+            resp = con.search_s(base, ldap.SCOPE_SUBTREE, filter, ['dn','uidNumber', 'cn'])
         finally:
             if con != None:
                 con.unbind()
 
         self.log.debug('List users: get %d users' % (len(resp)))
         for entry in resp:
-            if entry[1]['uid'][0]:
-                yield entry[1]['uid'][0]
+            self.log.debug('User %r' % (entry,))
+            if 'uidNumber' not in entry[1]:
+                continue
+            if entry[1]['cn'][0]:
+                yield entry[1]['cn'][0].decode('utf-8')
 
     def has_user(self, user):
         con = self.init_connection()
