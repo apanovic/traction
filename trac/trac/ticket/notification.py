@@ -17,6 +17,7 @@
 #
 
 import re
+import html
 
 from trac.api import IEnvironmentSetupParticipant
 from trac.attachment import IAttachmentChangeListener
@@ -131,16 +132,28 @@ class TicketFormatter(Component):
 
     def get_supported_styles(self, transport):
         yield 'text/plain', 'ticket'
+        yield 'text/html', 'ticket'
 
     def format(self, transport, style, event):
         if event.realm != 'ticket':
             return
         if event.category == 'batchmodify':
-            return self._format_plaintext_batchmodify(event)
+            content = self._format_plaintext_batchmodify(event)
         if event.category in ('attachment added', 'attachment deleted'):
-            return self._format_plaintext_attachment(event)
+            content = self._format_plaintext_attachment(event)
         else:
-            return self._format_plaintext(event)
+            content = self._format_plaintext(event)
+
+        if style == 'text/html':
+            return self._htmlize(content)
+        else:
+            return content
+
+    def _htmlize (self, content):
+        content = html.escape(content.decode())
+        content = re.sub(r'&lt;(http[^&]*)&gt;', '&lt;<a href="\\1">\\1</a>&gt;', content)
+        pre = '<pre>%s</pre>' % content
+        return pre.encode('utf-8')
 
     def _format_plaintext(self, event):
         """Format ticket change notification e-mail (untranslated)"""
