@@ -46,7 +46,7 @@ class WikiParser(Component):
     BULLET_CHARS = "-*\u2022"
 
     LINK_SCHEME = r"[a-zA-Z][-a-zA-Z0-9+._]*" # as per RFC 2396 + '_'
-    INTERTRAC_SCHEME = r"[a-zA-Z.+-]*?" # no digits (for shorthand links)
+    INTERTRAC_SCHEME = r"[a-zA-Z.+\-0-9]*?" # shorthand links
 
     QUOTED_STRING = r"'[^']+'|\"[^\"]+\""
 
