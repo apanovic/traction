@@ -1,0 +1,36 @@
+#!/bin/bash
+
+######################################################################
+#
+# This script was tested with gitolite
+#
+# Assumptions:
+#
+# - Trac is installed under /opt/trac/current
+# - The Trac enviroment is /opt/trac/env/test
+# 
+######################################################################
+
+export PATH=/opt/trac/current/usr/local/bin/:/usr/sbin:$PATH
+export PYTHONPATH=/opt/trac/current/usr/local/lib/python3.9/dist-packages/:$PYTHONPATH
+tracenv=/opt/trac/env/test
+repos=`trac-admin $tracenv repository list | grep ${PWD} | cut -d\  -f1`
+doresync=0
+if [ "$repos" != "" ] ; then
+  #echo "Updating trac repo for $PWD"
+  while read oldrev newrev refname; do
+    if [ "$oldrev" = 0000000000000000000000000000000000000000 ]; then
+        branches=`git for-each-ref --format="%(refname)" | grep -vw "$refname"`
+        git rev-list --reverse "$newrev" --not $branches --
+    elif [ "$newrev" = 0000000000000000000000000000000000000000 ]; then
+        doresync=1
+    else
+        branches=`git for-each-ref --format="%(refname)" | grep -vw "$refname"`
+        git rev-list --reverse "$newrev" --not "$oldrev" $branches --
+    fi | xargs -r trac-admin "$tracenv" changeset added "$repos"
+  done
+fi
+
+if [ $doresync = 1 ]; then
+  trac-admin "$tracenv" repository sync "$repos"
+fi
